@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  */
 public final class Constants
 {
-	public static String		PROGRAM_NAME = "ORF26-12.16.25";
+	public static String		PROGRAM_NAME = "ORF26-12.23.25";
 
 	public static Robot			robot;
 
@@ -44,11 +44,6 @@ public final class Constants
     // Pneumatic valve controller port assignments.
     
     // CAMERAS 
-
-    public static double maxVisionDistance = 3.0; // meters
-    
-    public static double xCameraOffset = 0;
-    public static double yCameraOffset = 0;
 
     // the names of the cameras in the PhotonVision software
 
@@ -89,42 +84,20 @@ public final class Constants
         // Factors used to reduce robot max speed to levels desired for lab/demo operation.
         // The split below matches the rotation speed to drive speed. Needs to be tuned for
         // full weight robot.
-        public static final double kDriveReductionFactor = .50; // 50% of normal.
-        public static final double kRotReductionFactor = .70; // 70% of normal.
+        public static final double kDriveReductionPct = .50; // 50% of max linear speed.
+        public static final double kRotationReductionPct = .70; // 70% of max rotational speed.
+
+        // Factors used to slow robot speed for fine driving.
+        public static final double kSlowModeLinearPct = .15; // 15% of max linear speed.
+        public static final double kSlowModeRotationPct = .40; // 40% of max rotational speed.
 
         // Drive Motor ramp rate. Needs to be tuned for full weight robot.
         public static final double kDriveRampRate = .5; // 0 to 12v in .5 second.
-
-        // Factors used to slow robot speed for fine driving.
-        public static final double kSlowModeFactor = .20; // 20% of normal.
-        public static final double kRotSlowModeFactor = .20; // 20% of normal.
 
         // Starting pose for sim. Is lower left corner (blue) or where we want sim robot to start.
         //public static final Pose2d	DEFAULT_STARTING_POSE = new Pose2d(7.473, .559, Rotation2d.kZero);
         public static final Pose2d	DEFAULT_STARTING_POSE = new Pose2d(0, 0, Rotation2d.kZero);
     }
-
-    // public static final class AutoConstants {
-    //     public static final double kMaxSpeedMetersPerSecond = 4.0;
-    //     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-    //     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-    //     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-
-    //     public static final double kPXController = 1;
-    //     public static final double kPYController = 1;
-    //     public static final double kPThetaController = 1;
-
-    //     public static final double kHolonomicPathFollowerP = 5.0;
-        
-    //     // Constraint for the motion profiled robot angle controller
-    //     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-    //         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    // }
-
-    // public static final class NeoMotorConstants {
-    //     public static final double kNeoFreeSpeedRpm = 5676;
-    //     public static final double kVortexFreeSpeedRpm = 6784;
-    // }
 
   //-------------------- No student code above this line ------------------------------------------------------
 

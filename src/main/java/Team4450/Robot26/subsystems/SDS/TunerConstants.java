@@ -46,7 +46,7 @@ public class TunerConstants {
 
     // The remote sensor feedback type to use for the steer motors;
     // When not Pro-licensed, Fused*/Sync* automatically fall back to Remote*
-    private static final SteerFeedbackType kSteerFeedbackType = SteerFeedbackType.RemoteCANcoder;
+    private static final SteerFeedbackType kSteerFeedbackType = SteerFeedbackType.RemoteCANcoder; // 4450
 
     // The stator current at which the wheels start to slip;
     // This needs to be tuned to your individual robot
@@ -206,7 +206,7 @@ public class TunerConstants {
     public static CommandSwerveDrivetrain createDrivetrain() {
         return new CommandSwerveDrivetrain(
             DrivetrainConstants, 100, FrontLeft, FrontRight, BackLeft, BackRight
-        );
+        );  // 4450
     }
 
 

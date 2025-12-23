@@ -33,9 +33,9 @@ public class DriveBase extends SubsystemBase
 
     private boolean                     fieldRelativeDriving = true, slowMode = false;
     private boolean                     neutralModeBrake = true;
-    private double                      driveSlowfactor = 1.0, rotateSlowfactor = 1.0;
-    private double                      maxSpeed, maxRotRate;
-    
+    private double                      maxSpeed = kMaxSpeed * kDriveReductionPct; 
+    private double                      maxRotRate = kMaxAngularRate * kRotationReductionPct;
+
     private final SwerveRequest.SwerveDriveBrake driveBrake = new SwerveRequest.SwerveDriveBrake();
 
     private final SwerveRequest.FieldCentric driveField = new SwerveRequest.FieldCentric()
@@ -107,9 +107,6 @@ public class DriveBase extends SubsystemBase
 
     public void drive(double throttle, double strafe, double rotation)
     {
-        maxSpeed = kMaxSpeed * kDriveReductionFactor * driveSlowfactor;
-        maxRotRate = kMaxAngularRate * kRotReductionFactor * rotateSlowfactor;
-
         if (fieldRelativeDriving)
             sdsDriveBase.setControl(
                 driveField.withVelocityX(throttle * maxSpeed) 
@@ -153,9 +150,16 @@ public class DriveBase extends SubsystemBase
 
         if (slowMode)
         {
-            driveSlowfactor = kSlowModeFactor;
-            rotateSlowfactor = kRotSlowModeFactor;
-        } else driveSlowfactor = rotateSlowfactor = 1.0;
+            // In slow mode, apply slow mode percentages.
+            maxSpeed = kMaxSpeed * kSlowModeLinearPct;
+            maxRotRate = kMaxAngularRate * kSlowModeRotationPct;
+        }
+        else
+        {
+            // In normal mode, apply reduction percentages.
+            maxSpeed = kMaxSpeed * kDriveReductionPct;
+            maxRotRate = kMaxAngularRate * kRotationReductionPct;
+        }
     }
 
     public void toggleNeutralMode()

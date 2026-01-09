@@ -1,14 +1,12 @@
-//LimelightHelpers v1.11 (REQUIRES LLOS 2025.0 OR LATER)
+//LimelightHelpers v1.12 (REQUIRES LLOS 2025.0 OR LATER)
 
-package Team4450.Robot26.utility;
+package Team4450.Robot26.subsystems;
 
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.TimestampedDoubleArray;
-import Team4450.Robot26.utility.LimelightHelpers.LimelightResults;
-import Team4450.Robot26.utility.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -21,6 +19,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -459,7 +458,10 @@ public class LimelightHelpers {
             targets_Classifier = new LimelightTarget_Classifier[0];
             targets_Detector = new LimelightTarget_Detector[0];
             targets_Barcode = new LimelightTarget_Barcode[0];
+
         }
+
+
     }
 
     /**
@@ -474,6 +476,7 @@ public class LimelightHelpers {
         public double distToRobot = 0;
         public double ambiguity = 0;
 
+
         public RawFiducial(int id, double txnc, double tync, double ta, double distToCamera, double distToRobot, double ambiguity) {
             this.id = id;
             this.txnc = txnc;
@@ -483,6 +486,21 @@ public class LimelightHelpers {
             this.distToRobot = distToRobot;
             this.ambiguity = ambiguity;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            RawFiducial other = (RawFiducial) obj;
+            return id == other.id &&
+                Double.compare(txnc, other.txnc) == 0 &&
+                Double.compare(tync, other.tync) == 0 &&
+                Double.compare(ta, other.ta) == 0 &&
+                Double.compare(distToCamera, other.distToCamera) == 0 &&
+                Double.compare(distToRobot, other.distToRobot) == 0 &&
+                Double.compare(ambiguity, other.ambiguity) == 0;
+        }
+
     }
 
     /**
@@ -501,6 +519,7 @@ public class LimelightHelpers {
         public double corner2_Y = 0;
         public double corner3_X = 0;
         public double corner3_Y = 0;
+
 
         public RawDetection(int classId, double txnc, double tync, double ta, 
             double corner0_X, double corner0_Y, 
@@ -566,6 +585,23 @@ public class LimelightHelpers {
             this.rawFiducials = rawFiducials;
             this.isMegaTag2 = isMegaTag2;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            PoseEstimate that = (PoseEstimate) obj;
+            // We don't compare the timestampSeconds as it isn't relevant for equality and makes
+            // unit testing harder
+            return Double.compare(that.latency, latency) == 0
+                && tagCount == that.tagCount
+                && Double.compare(that.tagSpan, tagSpan) == 0
+                && Double.compare(that.avgTagDist, avgTagDist) == 0
+                && Double.compare(that.avgTagArea, avgTagArea) == 0
+                && pose.equals(that.pose)
+                && Arrays.equals(rawFiducials, that.rawFiducials);
+        }
+
     }
 
     /**
@@ -610,10 +646,9 @@ public class LimelightHelpers {
     static boolean profileJSON = false;
 
     static final String sanitizeName(String name) {
-        if (name == "" || name == null) {
+        if ("".equals(name) || name == null) {
             return "limelight";
         }
-
         return name;
     }
 
@@ -629,7 +664,6 @@ public class LimelightHelpers {
             //System.err.println("Bad LL 3D Pose Data!");
             return new Pose3d();
         }
-
         return new Pose3d(
             new Translation3d(inData[0], inData[1], inData[2]),
             new Rotation3d(Units.degreesToRadians(inData[3]), Units.degreesToRadians(inData[4]),
@@ -649,7 +683,6 @@ public class LimelightHelpers {
             //System.err.println("Bad LL 2D Pose Data!");
             return new Pose2d();
         }
-
         Translation2d tran2d = new Translation2d(inData[0], inData[1]);
         Rotation2d r2d = new Rotation2d(Units.degreesToRadians(inData[5]));
         return new Pose2d(tran2d, r2d);
@@ -755,7 +788,6 @@ public class LimelightHelpers {
         var entry = LimelightHelpers.getLimelightNTTableEntry(limelightName, "rawfiducials");
         var rawFiducialArray = entry.getDoubleArray(new double[0]);
         int valsPerEntry = 7;
-
         if (rawFiducialArray.length % valsPerEntry != 0) {
             return new RawFiducial[0];
         }
@@ -789,7 +821,6 @@ public class LimelightHelpers {
         var entry = LimelightHelpers.getLimelightNTTableEntry(limelightName, "rawdetections");
         var rawDetectionArray = entry.getDoubleArray(new double[0]);
         int valsPerEntry = 12;
-        
         if (rawDetectionArray.length % valsPerEntry != 0) {
             return new RawDetection[0];
         }
@@ -901,6 +932,7 @@ public class LimelightHelpers {
         return getLimelightNTTableEntry(tableName, entryName).getDoubleArray(new double[0]);
     }
 
+
     public static String getLimelightNTString(String tableName, String entryName) {
         return getLimelightNTTableEntry(tableName, entryName).getString("");
     }
@@ -908,6 +940,7 @@ public class LimelightHelpers {
     public static String[] getLimelightNTStringArray(String tableName, String entryName) {
         return getLimelightNTTableEntry(tableName, entryName).getStringArray(new String[0]);
     }
+
 
     public static URL getLimelightURLString(String tableName, String request) {
         String urlString = "http://" + sanitizeName(tableName) + ".local:5807/" + request;
@@ -994,12 +1027,10 @@ public class LimelightHelpers {
      */
     public static int getTargetCount(String limelightName) {
       double[] t2d = getT2DArray(limelightName);
-      
       if(t2d.length == 17)
       {
         return (int)t2d[1];
       }
-
       return 0;
     }
 
@@ -1009,13 +1040,11 @@ public class LimelightHelpers {
      * @return Class index from classifier pipeline
      */
     public static int getClassifierClassIndex (String limelightName) {
-      double[] t2d = getT2DArray(limelightName);
-      
+    double[] t2d = getT2DArray(limelightName);
       if(t2d.length == 17)
       {
         return (int)t2d[10];
       }
-
       return 0;
     }
 
@@ -1025,13 +1054,11 @@ public class LimelightHelpers {
      * @return Class index from detector pipeline
      */
     public static int getDetectorClassIndex (String limelightName) {
-      double[] t2d = getT2DArray(limelightName);
-      
+     double[] t2d = getT2DArray(limelightName);
       if(t2d.length == 17)
       {
         return (int)t2d[11];
       }
-
       return 0;
     }
 
@@ -1261,6 +1288,7 @@ public class LimelightHelpers {
      * @return
      */
     public static Pose2d getBotPose2d_wpiBlue(String limelightName) {
+
         double[] result = getBotPose_wpiBlue(limelightName);
         return toPose2D(result);
     }
@@ -1294,6 +1322,7 @@ public class LimelightHelpers {
      * @return
      */
     public static Pose2d getBotPose2d_wpiRed(String limelightName) {
+
         double[] result = getBotPose_wpiRed(limelightName);
         return toPose2D(result);
 
@@ -1327,8 +1356,10 @@ public class LimelightHelpers {
      * @return
      */
     public static Pose2d getBotPose2d(String limelightName) {
+
         double[] result = getBotPose(limelightName);
         return toPose2D(result);
+
     }
    
     /**
@@ -1341,11 +1372,9 @@ public class LimelightHelpers {
      */
     public static IMUData getIMUData(String limelightName) {
         double[] imuData = getLimelightNTDoubleArray(limelightName, "imu");
-        
         if (imuData == null || imuData.length < 10) {
             return new IMUData();  // Returns object with all zeros
-        } 
-
+        }
         return new IMUData(imuData);
     }
 
@@ -1355,6 +1384,7 @@ public class LimelightHelpers {
     public static void setPipelineIndex(String limelightName, int pipelineIndex) {
         setLimelightNTDouble(limelightName, "pipeline", pipelineIndex);
     }
+
     
     public static void setPriorityTagID(String limelightName, int ID) {
         setLimelightNTDouble(limelightName, "priorityid", ID);
@@ -1403,6 +1433,7 @@ public class LimelightHelpers {
     public static void setStreamMode_PiPSecondary(String limelightName) {
         setLimelightNTDouble(limelightName, "stream", 2);
     }
+
 
     /**
      * Sets the crop window for the camera. The crop window in the UI must be completely open.
@@ -1466,9 +1497,7 @@ public class LimelightHelpers {
         entries[3] = pitchRate;
         entries[4] = roll;
         entries[5] = rollRate;
-        
         setLimelightNTDoubleArray(limelightName, "robot_orientation_set", entries);
-        
         if(flush)
         {
             Flush();
@@ -1483,6 +1512,27 @@ public class LimelightHelpers {
      */
     public static void SetIMUMode(String limelightName, int mode) {
         setLimelightNTDouble(limelightName, "imumode_set", mode);
+    }
+
+    /**
+     * Configures the complementary filter alpha value for IMU Assist Modes (Modes 3 and 4)
+     * 
+     * @param limelightName Name/identifier of the Limelight
+     * @param alpha Defaults to .001. Higher values will cause the internal IMU to converge onto the assist source more rapidly.
+     */
+    public static void SetIMUAssistAlpha(String limelightName, double alpha) {
+        setLimelightNTDouble(limelightName, "imuassistalpha_set", alpha);
+    }
+
+    
+    /**
+     * Configures the throttle value. Set to 100-200 while disabled to reduce thermal output/temperature.
+     * 
+     * @param limelightName Name/identifier of the Limelight
+     * @param throttle Defaults to 0. Your Limelgiht will process one frame after skipping <throttle> frames.
+     */
+    public static void SetThrottle(String limelightName, int throttle) {
+        setLimelightNTDouble(limelightName, "throttle_set", throttle);
     }
 
     /**
@@ -1501,7 +1551,6 @@ public class LimelightHelpers {
         entries[0] = x;
         entries[1] = y;
         entries[2] = z;
-
         setLimelightNTDoubleArray(limelightName, "fiducial_offset_set", entries);
     }
 
@@ -1514,11 +1563,9 @@ public class LimelightHelpers {
      */
     public static void SetFiducialIDFiltersOverride(String limelightName, int[] validIDs) {
         double[] validIDsDouble = new double[validIDs.length];
-        
         for (int i = 0; i < validIDs.length; i++) {
             validIDsDouble[i] = validIDs[i];
         }        
-        
         setLimelightNTDoubleArray(limelightName, "fiducial_id_filters_set", validIDsDouble);
     }
 
@@ -1532,32 +1579,26 @@ public class LimelightHelpers {
     public static void SetFiducialDownscalingOverride(String limelightName, float downscale) 
     {
         int d = 0; // pipeline
-
         if (downscale == 1.0)
         {
             d = 1;
         }
-
         if (downscale == 1.5)
         {
             d = 2;
         }
-
         if (downscale == 2)
         {
             d = 3;
         }
-
         if (downscale == 3)
         {
             d = 4;
         }
-
         if (downscale == 4)
         {
             d = 5;
         }
-
         setLimelightNTDouble(limelightName, "fiducial_downscale_set", d);
     }
     
@@ -1607,12 +1648,10 @@ public class LimelightHelpers {
 
     private static boolean SYNCH_TAKESNAPSHOT(String tableName, String snapshotName) {
         URL url = getLimelightURLString(tableName, "capturesnapshot");
-        
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            
-            if (snapshotName != null && snapshotName != "") {
+            if (snapshotName != null && !"".equals(snapshotName)) {
                 connection.setRequestProperty("snapname", snapshotName);
             }
 
@@ -1625,7 +1664,6 @@ public class LimelightHelpers {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-
         return false;
     }
 
@@ -1638,7 +1676,6 @@ public class LimelightHelpers {
 
         long start = System.nanoTime();
         LimelightHelpers.LimelightResults results = new LimelightHelpers.LimelightResults();
-        
         if (mapper == null) {
             mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         }
@@ -1652,7 +1689,6 @@ public class LimelightHelpers {
         long end = System.nanoTime();
         double millis = (end - start) * .000001;
         results.latency_jsonParse = millis;
-        
         if (profileJSON) {
             System.out.printf("lljson: %.2f\r\n", millis);
         }

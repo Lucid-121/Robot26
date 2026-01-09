@@ -20,8 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants
-{
+public final class Constants {
 	public static String		PROGRAM_NAME = "ORF26-12.29.25";
 
 	public static Robot			robot;
@@ -57,6 +56,9 @@ public final class Constants
 	
 	// GamePad port assignments.
 	public static final int		DRIVER_PAD = 0, UTILITY_PAD = 1;
+
+    public static String LIMELIGHT_ONE = "limelight-right";
+    public static String LIMELIGHT_TWO = "limelight-left";
 
 	// LCD display line number constants showing class where the line is set.
 	public static final int		LCD_1 = 1;	    // Robot, Auto Commands.

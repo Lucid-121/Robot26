@@ -10,6 +10,7 @@ import Team4450.Robot26.commands.DriveCommand;
 import Team4450.Robot26.subsystems.Candle;
 import Team4450.Robot26.subsystems.DriveBase;
 import Team4450.Robot26.subsystems.ShuffleBoard;
+import Team4450.Robot26.subsystems.LimelightHelpers;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.Util;
 import Team4450.Lib.CameraFeed;
@@ -275,6 +276,17 @@ public class RobotContainer
 				driverController.setRumble(RumbleType.kBothRumble, 0);
 				utilityController.setRumble(RumbleType.kBothRumble, 0);
 		}));
+
+        Util.consoleLog("Limelight One");
+        LimelightHelpers.LimelightResults resultOne = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_ONE);
+        if (resultOne != null) {
+            Util.consoleLog("Limelight One see");
+        }
+        Util.consoleLog("Limelight Two");
+        LimelightHelpers.LimelightResults resultTwo = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_TWO);
+        if (resultTwo != null) {
+            Util.consoleLog("Limelight Two see");
+        }
 
 		// holding top right bumper enables the alternate rotation mode in
 		// which the driver points stick to desired heading.

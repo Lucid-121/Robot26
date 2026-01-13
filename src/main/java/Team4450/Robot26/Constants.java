@@ -9,7 +9,9 @@ import java.util.Properties;
 
 import Team4450.Robot26.subsystems.SDS.TunerConstants;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.DriverStation;
 
 /**
@@ -72,6 +74,8 @@ public final class Constants
 
     public static double FLYWHEEL_MAX_THEORETICAL_RPM = 4000;
 
+    public static boolean UPDATE_QUESTNAV = true;
+
     // Interpolation table
     public static double[] FLYWHEEL_SPEED_TABLE = {0.57, 0.595, 0.69, 0.715, 0.73, 0.82, 0.86};
     public static double[] FLYWHEEL_SPEED_DISTANCE_TABLE = {40, 56, 90, 95, 103, 127, 152};
@@ -116,6 +120,7 @@ public final class Constants
         // Starting pose for sim. Is lower left corner (blue) or where we want sim robot to start.
         //public static final Pose2d	DEFAULT_STARTING_POSE = new Pose2d(7.473, .559, Rotation2d.kZero);
         public static final Pose2d	DEFAULT_STARTING_POSE = new Pose2d(0, 0, Rotation2d.kZero);
+        public static final Pose3d	DEFAULT_STARTING_POSE_3D = new Pose3d(0, 0, 0, Rotation3d.kZero);
     }
 
   //-------------------- No student code above this line ------------------------------------------------------

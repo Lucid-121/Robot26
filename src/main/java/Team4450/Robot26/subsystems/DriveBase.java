@@ -129,7 +129,7 @@ public class DriveBase extends SubsystemBase
         SmartDashboard.putNumber("Gyro angle", getYaw());
         SmartDashboard.putString("Robot od pose", getPose().toString());
         if (robotPose != null) {
-            SmartDashboard.putString("Robot pose", robotPose.toString());
+            SmartDashboard.putString("Robot pose pose pose pose", robotPose.toString());
         }
     }
 

@@ -102,12 +102,6 @@ public class QuestNavSubsystem extends SubsystemBase {
         // https://docs.limelightvision.io/docs/docs-limelight/getting-started/summary
         if (questNav.isTracking()) {
             // This method will be called once per scheduler run
-            SmartDashboard.putString("qTranformedPose: ", getQuestRobotPose().toString());
-            SmartDashboard.putString("qTruePose: ", getQuestPose().toString());
-            SmartDashboard.putNumber("TimeStamp: ", getQTimeStamp());
-            SmartDashboard.putNumber("TimeStampA: ", getQAppTimeStamp());
-            SmartDashboard.putNumber("TimeStampFPGS: ", (getQTimeStamp()));
-            SmartDashboard.putString("Is Tracking", questNav.isTracking() ? "True" : "False");
             questNav.commandPeriodic();
 
             //update pose Frames
@@ -116,11 +110,6 @@ public class QuestNavSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("qFrames", poseFrames.length);
             if(Constants.UPDATE_QUESTNAV) {
                 for (PoseFrame questFrame : poseFrames) {
-                    Util.consoleLog(String.valueOf(questFrame.questPose3d().getX()));
-                    
-                    Util.consoleLog("Quest Timestamp");
-                    Util.consoleLog(String.valueOf(questFrame.dataTimestamp()));
-
                     // Is the dataTimestamp in seconds
                     drivebase.addVisionMeasurement(questFrame.questPose3d().toPose2d(), questFrame.dataTimestamp());
 

@@ -64,6 +64,7 @@ public class VisionSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        // How to stpo this when disabled
         i++;
         boolean useLeftLimelight = true;
         boolean useRightLimelight = true;

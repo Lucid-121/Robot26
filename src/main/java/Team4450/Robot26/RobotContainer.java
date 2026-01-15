@@ -48,7 +48,6 @@ public class RobotContainer {
 
     // General todo list for Cole Pearson
     //
-    // Remove all compressor stuff from the code
     // Remove any unused smartdashboard varuables
     // Remove the candle
     // Remove console logs that are causing radio issues
@@ -71,9 +70,11 @@ public class RobotContainer {
     // When in the middle swap from hub heading targeting to left or right of the hub targeting driving
     //
     // Shoot on the move ability
-    //
-    //
 	
+
+
+
+
 	// Subsystem Default Commands.
 
     // Persistent Commands.
@@ -108,7 +109,7 @@ public class RobotContainer {
 	
 	private static String 			autonomousCommandName = "none";
 
-	private static PIDController		headingPID;
+	private static PIDController headingPID;
 
 	/**
 	 * The container for the robot. Contains subsystems, Opertor Interface devices, and commands.

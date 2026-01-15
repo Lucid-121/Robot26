@@ -11,6 +11,7 @@ import Team4450.Lib.LCD;
 import Team4450.Lib.Util;
 import Team4450.Robot26.subsystems.DriveBase;
 import static Team4450.Robot26.Constants.*;
+import Team4450.Robot26.utility.ConsoleEveryX;
 
 public class DriveCommand extends Command 
 {
@@ -81,11 +82,20 @@ public class DriveCommand extends Command
         
         if (robot.isAutonomous()) return;
 
-        Pose2d hubPosition = alliance == DriverStation.Alliance.Blue
-            ? (WELDED_FIELD ? new Pose2d(HUB_BLUE_WELDED_POSE.getX(), HUB_BLUE_WELDED_POSE.getY(), Rotation2d.kZero)
-                                      : new Pose2d(HUB_BLUE_ANDYMARK_POSE.getX(), HUB_BLUE_ANDYMARK_POSE.getY(), Rotation2d.kZero))
-            : (WELDED_FIELD ? new Pose2d(HUB_RED_WELDED_POSE.getX(), HUB_RED_WELDED_POSE.getY(), Rotation2d.kZero)
-                                      : new Pose2d(HUB_RED_ANDYMARK_POSE.getX(), HUB_RED_ANDYMARK_POSE.getY(), Rotation2d.kZero));
+        Pose2d hubPosition;
+        if (alliance == DriverStation.Alliance.Blue) {
+            if (WELDED_FIELD) {
+                hubPosition = new Pose2d(HUB_BLUE_WELDED_POSE.getX(), HUB_BLUE_WELDED_POSE.getY(), Rotation2d.kZero);
+            } else {
+                hubPosition = new Pose2d(HUB_BLUE_ANDYMARK_POSE.getX(), HUB_BLUE_ANDYMARK_POSE.getY(), Rotation2d.kZero);
+            }
+        } else {
+            if (WELDED_FIELD) {
+                hubPosition = new Pose2d(HUB_RED_WELDED_POSE.getX(), HUB_RED_WELDED_POSE.getY(), Rotation2d.kZero);
+            } else {
+                hubPosition = new Pose2d(HUB_RED_ANDYMARK_POSE.getX(), HUB_RED_ANDYMARK_POSE.getY(), Rotation2d.kZero);
+            }
+        }
         
         double targetHeading;
         if (rotationXSupplier.getAsDouble() == 0 && rotationYSupplier.getAsDouble() == 0 && alliance == DriverStation.Alliance.Blue) {
@@ -123,13 +133,15 @@ public class DriveCommand extends Command
         // strafe = Util.squareInput(strafe);
         // rotation = Util.squareInput(rotation);
         // rotation = Math.pow(rotation, 5);
+        //
+        ConsoleEveryX rotationLog = new ConsoleEveryX(200);
+        rotationLog.update("Heading PID rotation output: " + String.valueOf(rotation));
 
         driveBase.drive(throttle, strafe, rotation);
     }
 
     @Override 
-    public void end(boolean interrupted) 
-    {
+    public void end(boolean interrupted) {
         Util.consoleLog("interrupted=%b", interrupted);
     }
 }

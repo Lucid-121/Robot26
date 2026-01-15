@@ -47,8 +47,8 @@ public class DriveBase extends SubsystemBase {
     private boolean                     neutralModeBrake = true;
     private double                      maxSpeed = kMaxSpeed * kDriveReductionPct; 
     private double                      maxRotRate = kMaxAngularRate * kRotationReductionPct;
-    private boolean headingSwivelMode;
-    private boolean ferryingSwivelMode;
+
+    private boolean swivalTracking;
     private double headingTarget;
 
     private final SwerveRequest.SwerveDriveBrake driveBrake = new SwerveRequest.SwerveDriveBrake();
@@ -135,23 +135,13 @@ public class DriveBase extends SubsystemBase {
     }
 
     public void drive(double throttle, double strafe, double rotation) {
-        if (headingSwivelMode) {
-            // Inject rotation code into the drive command
-        }
-
         if (fieldRelativeDriving)
             sdsDriveBase.setControl(
                 driveField.withVelocityX(throttle * maxSpeed) 
                         .withVelocityY(strafe * maxSpeed) 
                         .withRotationalRate(rotation * maxRotRate));
-        else if (headingSwivelMode) {
+        else if (swivalTracking) {
             // Get the angle target to the hub
-            sdsDriveBase.setControl(
-                driveRobot.withVelocityX(throttle * maxSpeed) 
-                        .withVelocityY(strafe * maxSpeed) 
-                        .withRotationalRate(rotation * maxRotRate));
-        } else if (ferryingSwivelMode) {
-            // Figure out to target left or right of the hub based on the y
             sdsDriveBase.setControl(
                 driveRobot.withVelocityX(throttle * maxSpeed) 
                         .withVelocityY(strafe * maxSpeed) 

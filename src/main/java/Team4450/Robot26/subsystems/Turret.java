@@ -1,6 +1,6 @@
 package Team4450.Robot26.subsystems;
 
-import Team4450.Robot26.Constants;
+import static Team4450.Robot26.Constants.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,9 +16,9 @@ public class Turret extends SubsystemBase {
     // Tunable motion parameters (initialized from Constants but editable at runtime)
     // Internals use deg/sec and deg/sec^2. For convenience we expose RPM units on the dashboard
     // and convert to degrees internally (1 RPM = 6 deg/sec).
-    private double turretMaxVelDegPerSec = Constants.TURRET_MAX_VELOCITY_DEG_PER_SEC;
-    private double turretMaxAccelDegPerSec2 = Constants.TURRET_MAX_ACCELERATION_DEG_PER_SEC2;
-    private boolean turretAccelEnabled = Constants.TURRET_ACCELERATION_ENABLED;
+    private double turretMaxVelDegPerSec = TURRET_MAX_VELOCITY_DEG_PER_SEC;
+    private double turretMaxAccelDegPerSec2 = TURRET_MAX_ACCELERATION_DEG_PER_SEC2;
+    private boolean turretAccelEnabled = TURRET_ACCELERATION_ENABLED;
     // Flywheel runtime tunables (RPM and RPM/s units on dashboard)
     // (flywheel is currently controlled by TestSubsystem; no dashboard-driven flywheel tunables here)
 
@@ -30,8 +30,8 @@ public class Turret extends SubsystemBase {
 
         // Publish tuning values to SmartDashboard so they can be changed while testing.
         // Publish both RPM-based and internal values for clarity/editing.
-        SmartDashboard.putNumber("Turret/MaxVelocityRPM", Constants.TURRET_DEFAULT_MAX_VELOCITY_RPM);
-        SmartDashboard.putNumber("Turret/MaxAccelerationRPMperSec", Constants.TURRET_DEFAULT_MAX_ACCEL_RPMS);
+        SmartDashboard.putNumber("Turret/MaxVelocityRPM", TURRET_DEFAULT_MAX_VELOCITY_RPM);
+        SmartDashboard.putNumber("Turret/MaxAccelerationRPMperSec", TURRET_DEFAULT_MAX_ACCEL_RPMS);
         SmartDashboard.putBoolean("Turret/AccelEnabled", turretAccelEnabled);
 
     // Flywheel is controlled by TestSubsystem (code-controlled). No dashboard defaults here.
@@ -40,8 +40,8 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
     // Read potentially-updated tuning values from SmartDashboard (RPM-based entries).
-    double hudTurretMaxVelRpm = SmartDashboard.getNumber("Turret/MaxVelocityRPM", Constants.TURRET_DEFAULT_MAX_VELOCITY_RPM);
-    double hudTurretMaxAccelRpms = SmartDashboard.getNumber("Turret/MaxAccelerationRPMperSec", Constants.TURRET_DEFAULT_MAX_ACCEL_RPMS);
+    double hudTurretMaxVelRpm = SmartDashboard.getNumber("Turret/MaxVelocityRPM", TURRET_DEFAULT_MAX_VELOCITY_RPM);
+    double hudTurretMaxAccelRpms = SmartDashboard.getNumber("Turret/MaxAccelerationRPMperSec", TURRET_DEFAULT_MAX_ACCEL_RPMS);
     turretAccelEnabled = SmartDashboard.getBoolean("Turret/AccelEnabled", turretAccelEnabled);
 
     // Convert RPM-based dashboard values to internal deg/sec units: 1 RPM = 360 deg / 60 sec = 6 deg/sec
@@ -51,7 +51,7 @@ public class Turret extends SubsystemBase {
     // Flywheel is controlled by TestSubsystem via Constants; no dashboard reads here.
 
         // Update the acceleration-limited motion profile for the turret every robot cycle.
-        updateMotion(Constants.ROBOT_PERIOD_SEC);
+        updateMotion(ROBOT_PERIOD_SEC);
     }
 
     public void aimTurret(Pose2d robotPosition) {
@@ -178,7 +178,7 @@ public class Turret extends SubsystemBase {
         commandedAngleDeg += commandedAngularVelocity * dt;
 
         // If we're very close to target, snap to it and zero velocity to avoid jitter.
-        if (Math.abs(wrapAngleDeg(requestedAngleDeg - commandedAngleDeg)) <= Constants.TURRET_ANGLE_TOLERANCE_DEG) {
+        if (Math.abs(wrapAngleDeg(requestedAngleDeg - commandedAngleDeg)) <= TURRET_ANGLE_TOLERANCE_DEG) {
             commandedAngleDeg = requestedAngleDeg;
             commandedAngularVelocity = 0.0;
         }

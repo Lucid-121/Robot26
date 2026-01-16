@@ -73,7 +73,7 @@ public class QuestNavSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         questTestLogger.update("Quest periodic");
-        if (questNav.isConnected()) { // Is tracking was returning false
+        if (questNav.isTracking()) { // Is connected was working as well but I would prefer that is tracking would work, but it has not been tested
             // This method will be called once per scheduler run
             questNav.commandPeriodic();
 
@@ -85,7 +85,7 @@ public class QuestNavSubsystem extends SubsystemBase {
                 for (PoseFrame questFrame : poseFrames) {
                     // The dataTimestamp is in seconds
                     questLogger.update(questFrame.questPose3d().toPose2d().toString());
-                    drivebase.addVisionMeasurement(questFrame.questPose3d().toPose2d(), questFrame.dataTimestamp());
+                    drivebase.addQuestMeasurement(questFrame.questPose3d().toPose2d(), questFrame.dataTimestamp());
                 }
             }
         }

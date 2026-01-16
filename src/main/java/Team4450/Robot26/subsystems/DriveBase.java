@@ -277,6 +277,12 @@ public class DriveBase extends SubsystemBase {
         SmartDashboard.putBoolean("Field Oriented", fieldRelativeDriving);
     }
 
+    public void addQuestMeasurement(Pose2d pose, double timestampSeconds) {
+        // Some kind of fancy averaging
+        robotPose = pose;
+    }
+
+
     // AddVisionUpdate
     public void addVisionMeasurement(Pose2d pose, double timestampSeconds) {
         // Use the visionBuffer

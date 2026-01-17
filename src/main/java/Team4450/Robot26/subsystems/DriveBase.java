@@ -36,6 +36,8 @@ public class DriveBase extends SubsystemBase {
     private CommandSwerveDrivetrain     sdsDriveBase = TunerConstants.createDrivetrain();
 
     public PigeonWrapper pigeonWrapper = new PigeonWrapper(sdsDriveBase.getPigeon2());
+
+    // This should init to whatever the limelights see during the init period, otherwise set a smartdashboard and a console log into if it does not
     public Pose2d robotPose = new Pose2d(0, 0, Rotation2d.kZero);
     
     private final Telemetry     		logger = new Telemetry(kMaxSpeed);

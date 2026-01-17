@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import Team4450.Robot26.utility.RobotOrientation;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.math.geometry.Transform2d;
 
 /**
  * This class wraps the SDS drive base subsystem allowing us to add/modify drive base
@@ -39,6 +40,7 @@ public class DriveBase extends SubsystemBase {
 
     // This should init to whatever the limelights see during the init period, otherwise set a smartdashboard and a console log into if it does not
     public Pose2d robotPose = new Pose2d(0, 0, Rotation2d.kZero);
+    public Transform2d limelightOffsetPose = new Transform2d(0, 0, Rotation2d.kZero);
     
     private final Telemetry     		logger = new Telemetry(kMaxSpeed);
     // Field2d object creates the field display on the simulation and gives us an API
@@ -249,12 +251,12 @@ public class DriveBase extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return robotPose;
+        return robotPose.transformBy(this.limelightOffsetPose);
     }
 
     public Pose3d getPose3d() {
         // I think it should be fine to always assume zero z
-        return new Pose3d(robotPose);
+        return new Pose3d(getPose());
     }
 
     public double getYaw()
@@ -278,7 +280,6 @@ public class DriveBase extends SubsystemBase {
     }
 
     public void addQuestMeasurement(Pose2d pose, double timestampSeconds) {
-        // Some kind of fancy averaging
         robotPose = pose;
     }
 
@@ -292,7 +293,7 @@ public class DriveBase extends SubsystemBase {
         // Remove any vision poses the break the laws of physics
 
         // Basic vision update that just sets the pose, this is good enough for testing if it is working
-        robotPose = pose;
+        this.limelightOffsetPose = pose.minus(this.robotPose);
     }
 
     public double getAngleToAim(Pose2d targetPose) {

@@ -6,6 +6,8 @@ import static Team4450.Robot26.Constants.*;
 import Team4450.Lib.*;
 import Team4450.Robot26.utility.RobotOrientation;
 import Team4450.Robot26.wpilib.TimedRobot;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -258,6 +260,14 @@ public class Robot extends TimedRobot {
 
     // Set Limelight imu mode to 2
     RobotContainer.visionSubsystem.enableInternalIMU();
+
+    if (RobotContainer.drivebase.limelightOffsetPose.getX() != 0 && RobotContainer.drivebase.limelightOffsetPose.getY() != 0) {
+        RobotContainer.drivebase.robotPose = new Pose2d(RobotContainer.drivebase.limelightOffsetPose.getX(), RobotContainer.drivebase.limelightOffsetPose.getY(), RobotContainer.drivebase.limelightOffsetPose.getRotation());
+        RobotContainer.drivebase.resetOdometry(RobotContainer.drivebase.robotPose);
+        RobotContainer.questNavSubsystem.resetQuestOdometry(new Pose3d(RobotContainer.drivebase.robotPose));
+    } else {
+        Util.consoleLog("Fail");
+    }
 
     //robotContainer.fixPathPlannerGyro(); rich // Because of this only use blue alliance during practice
 

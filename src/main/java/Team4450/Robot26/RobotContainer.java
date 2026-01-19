@@ -282,14 +282,14 @@ public class RobotContainer {
 		// new Trigger(() -> driverController.getAButton()) // Rich
 		//  	.onTrue(new InstantCommand(driveBase::toggleFieldRelativeDriving));
 
-		new Trigger(() -> driverController.getAButton())
-		 	.onTrue(new InstantCommand(questNavSubsystem::resetTestPose));
+		//new Trigger(() -> driverController.getAButton())
+		 	//.onTrue(new InstantCommand(questNavSubsystem::resetTestPose));
 
 		// new Trigger(() -> driverController.getBButton())
 		//  	.onTrue(new InstantCommand(questNavSubsystem::resetToZeroPose));
 
-		new Trigger(() -> driverController.getBButton())
-		 	.onTrue(new InstantCommand(() -> drivebase.resetOdometry(new Pose2d(0, 0, Rotation2d.kZero))));
+		//new Trigger(() -> driverController.getBButton())
+		 	//.onTrue(new InstantCommand(() -> drivebase.resetOdometry(new Pose2d(0, 0, Rotation2d.kZero))));
 
 		// // Toggle motor brake mode.
 		// new Trigger(() -> driverController.getBButton()) // Rich
@@ -302,11 +302,11 @@ public class RobotContainer {
 		// -------- Utility controller buttons ----------
 
 		// Driver controller A/B used for flywheel start/stop (TestSubsystem currently drives the motor)
-		// new Trigger(() -> driverController.getAButton())
-		// 	.onTrue(new InstantCommand(testSubsystem::start));
+		 new Trigger(() -> driverController.getAButton())
+		 	.onTrue(new InstantCommand(testSubsystem::start));
 
-		// new Trigger(() -> driverController.getBButton())
-		// 	.onTrue(new InstantCommand(testSubsystem::stop));
+		 new Trigger(() -> driverController.getBButton())
+		 	.onTrue(new InstantCommand(testSubsystem::stop));
 
 	}
 

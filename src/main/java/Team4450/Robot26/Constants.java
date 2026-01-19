@@ -147,9 +147,10 @@ public final class Constants {
 
     // Flywheel tuning defaults
     // Default target RPM for flywheel (used as a manual override/starting value)
-    public static final double FLYWHEEL_DEFAULT_TARGET_RPM = 1845.0;
+    // Keep this positive; use `FLYWHEEL_DIRECTION` to invert sign for hardware wiring differences.
+    public static final double FLYWHEEL_DEFAULT_TARGET_RPM = 1500.0;
     // Default flywheel acceleration in RPM per second (used for ramping if implemented)
-    public static final double FLYWHEEL_DEFAULT_ACCEL_RPMS = 20000.0;
+    public static final double FLYWHEEL_DEFAULT_ACCEL_RPMS = 5000.0;
     // Default open-loop start percent for flywheel when controlled by code only (0.0 - 1.0)
     public static final double FLYWHEEL_DEFAULT_START_PERCENT = 0.5; // 50% output
 
@@ -166,8 +167,15 @@ public final class Constants {
     public static final double FLYWHEEL_kV = 0.12;   // volts per rps (V / rps)
     public static final double FLYWHEEL_kA = 0.00;   // volts per (rps/s) (V / (rps/s))
 
+    // Direction multiplier for flywheel hardware. Set to 1.0 for normal, -1.0 to invert
+    // the commanded velocity/voltage signs if the motor spins the wrong way.
+    // NOTE: keep target RPMs positive in the constants and flip direction here instead
+    // of making the target negative — the subsystem will multiply the commanded
+    // velocity/feedforward by this value.
+    public static final double FLYWHEEL_DIRECTION = -1.0;
+
     // PID gains for velocity closed-loop (these are in Volt-output PID units used by Phoenix)
-    public static final double FLYWHEEL_kP = 0.11;
+    public static final double FLYWHEEL_kP = 0.17;
     public static final double FLYWHEEL_kI = 0.0;
     public static final double FLYWHEEL_kD = 0.0;
 
@@ -194,15 +202,16 @@ public final class Constants {
         public static final double kA = 0.00;   // volts per (rps/s) (V / (rps/s))
 
         // PID gains for velocity closed-loop (these are in Volt-output PID units used by Phoenix)
-        public static final double kP = 0.11;
+        public static final double kP = 0.17;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
 
-        // Default target RPM for flywheel (used as a manual override/starting value)
-        public static final double DEFAULT_TARGET_RPM = 1000.0;
+    // Default target RPM for flywheel (used as a manual override/starting value)
+    // Keep this in the same units as the top-level constant (RPM).
+    public static final double DEFAULT_TARGET_RPM = 1845.0;
 
-        // Default flywheel acceleration in RPM per second (used for ramping if implemented)
-        public static final double DEFAULT_ACCEL_RPMS = 5000.0;
+    // Default flywheel acceleration in RPM per second (used for ramping if implemented)
+    public static final double DEFAULT_ACCEL_RPMS = 20000.0;
 
         // Default open-loop start percent for flywheel when controlled by code only (0.0 - 1.0)
         public static final double DEFAULT_START_PERCENT = 0.5; // 50% output

@@ -113,12 +113,12 @@ public final class Constants {
     public static double ROBOT_STRAFE_KI_MAX = 0;
     public static double ROBOT_STRAFE_KD = 0;
 
-    public static double ROBOT_HEADING_KP = 0.012; // 0.03 seems resonable on the test field
+    public static double ROBOT_HEADING_KP = 0.04;
     public static double ROBOT_HEADING_KI = 0;
     public static double ROBOT_HEADING_KI_MAX = 0;
     public static double ROBOT_HEADING_KD = 0;
     // public static double ROBOT_HEADING_KF = 0;
-    public static double ROBOT_HEADING_TOLERANCE_DEG = 2;
+    public static double ROBOT_HEADING_TOLERANCE_DEG = 0.5;
     // public static double ROBOT_HEADING_MAX_OUTPUT = 1;
 
     public static double FLYWHEEL_MAX_THEORETICAL_RPM = 4000;

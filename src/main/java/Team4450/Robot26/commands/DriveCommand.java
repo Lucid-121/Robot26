@@ -114,11 +114,11 @@ public class DriveCommand extends Command
             }
             
         } else {
-            targetHeading = Math.toDegrees(Math.atan2(rotationYSupplier.getAsDouble(), rotationXSupplier.getAsDouble()));
+            targetHeading = -Math.toDegrees(Math.atan2(rotationYSupplier.getAsDouble(), rotationXSupplier.getAsDouble()));
         }
 
-        // double rotation = -headingPID.calculate(drivebase.getYaw180(), -targetHeading);
-        double rotation = rotationXSupplier.getAsDouble();
+        double rotation = -headingPID.calculate(drivebase.getYaw180(), -targetHeading);
+        // double rotation = rotationXSupplier.getAsDouble();
         double throttle = throttleSupplier.getAsDouble();
         double strafe = strafeSupplier.getAsDouble();
 

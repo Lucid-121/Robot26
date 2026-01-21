@@ -5,8 +5,6 @@ FRC Team 4450 2026 Robot Control program used in competition.
 This is the 2026 competition robot control program created by the Olympia Robotics Federation (FRC Team 4450). 
 
 Operates the robot **TBA** for FRC game **Rebuilt**.
-
-### Warning: This code is beta level for 2026 and WILL change until programmers are notified that it is stable and ready to build robot programs for 2026.
 ----------------------------------------------------------------------------
 ### Instructions to setup development environment for VS Code
 1) Follow the instructions [here](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/index.html) to setup the JDK, Visual Studio Code, the FRC plugins and tools. Do not install the C++ portion. You do not need the FRC Update Suite to compile code.

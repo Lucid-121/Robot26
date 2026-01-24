@@ -9,13 +9,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import Team4450.Lib.LCD;
 import Team4450.Lib.Util;
-import Team4450.Robot26.subsystems.DriveBase;
+import Team4450.Robot26.subsystems.Drivebase;
 import static Team4450.Robot26.Constants.*;
 import Team4450.Robot26.utility.ConsoleEveryX;
 
 public class PIDDriveCommand extends Command 
 {
-    private final DriveBase driveBase;
+    private final Drivebase driveBase;
 
     public final PIDController throttlePID;
     public final PIDController strafePID;
@@ -25,7 +25,7 @@ public class PIDDriveCommand extends Command
     public double targetY;
     public double targetHeading;
 
-    public PIDDriveCommand(DriveBase driveBase, PIDController throttlePID, PIDController strafePID, PIDController headingPID, double targetX, double targetY, double targetHeading) 
+    public PIDDriveCommand(Drivebase driveBase, PIDController throttlePID, PIDController strafePID, PIDController headingPID, double targetX, double targetY, double targetHeading) 
     {
         Util.consoleLog();
 

@@ -27,14 +27,16 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import Team4450.Robot26.utility.RobotOrientation;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.math.geometry.Transform2d;
+import Team4450.Robot26.RobotContainer;
 
 /**
  * This class wraps the SDS drive base subsystem allowing us to add/modify drive base
  * functions without modifyinig the SDS code generated from Tuner. Also allows for
  * convenience wrappers for more complex functions in SDS code.
  */
-public class DriveBase extends SubsystemBase {
+public class Drivebase extends SubsystemBase {
     private CommandSwerveDrivetrain     sdsDriveBase = TunerConstants.createDrivetrain();
+    private QuestNavSubsystem questNavSubsystem;
 
     public PigeonWrapper pigeonWrapper = new PigeonWrapper(sdsDriveBase.getPigeon2());
 
@@ -65,7 +67,9 @@ public class DriveBase extends SubsystemBase {
             .withRotationalDeadband(kMaxAngularRate * ROTATION_DEADBAND) // Add deadbands
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
-    public DriveBase() {
+    public Drivebase() {
+        this.questNavSubsystem = RobotContainer.questNavSubsystem;
+
         Util.consoleLog();
 
         // Add pigeon gyro as a Sendable. Updates the dashboard heading indicator automatically.
@@ -136,11 +140,17 @@ public class DriveBase extends SubsystemBase {
     }
 
     public void drive(double throttle, double strafe, double rotation) {
-        if (fieldRelativeDriving)
+        if (fieldRelativeDriving) {
             sdsDriveBase.setControl(
                 driveField.withVelocityX(throttle * maxSpeed) 
                         .withVelocityY(strafe * maxSpeed) 
                         .withRotationalRate(rotation * maxRotRate));
+        } else {
+            sdsDriveBase.setControl(
+                driveRobot.withVelocityX(throttle * maxSpeed) 
+                        .withVelocityY(strafe * maxSpeed) 
+                        .withRotationalRate(rotation * maxRotRate));
+        }
 
         SmartDashboard.putNumber("Drive Velocity X", driveField.VelocityX);
         SmartDashboard.putNumber("Drive Velocity Y", driveField.VelocityY);
@@ -242,18 +252,23 @@ public class DriveBase extends SubsystemBase {
     }
 
     /**
-     * Returns current pose of the robot.
-     * @return Robot pose.
+     * Returns current sds drivebase odometry pose of the robot.
+     * @return Robot odometry pose.
      */
     public Pose2d getODPose()
     {
         return sdsDriveBase.getState().Pose;
     }
 
+    /**
+     * Returns current pose estimate for the robot.
+     * @return Robot pose.
+     */
     public Pose2d getPose() {
         return robotPose.transformBy(this.limelightOffsetPose);
     }
 
+    @Deprecated
     public Pose3d getPose3d() {
         // I think it should be fine to always assume zero z
         return new Pose3d(getPose());
@@ -286,6 +301,7 @@ public class DriveBase extends SubsystemBase {
 
     // AddVisionUpdate
     public void addVisionMeasurement(Pose2d pose, double timestampSeconds) {
+        // TODO: All the stuff below this
         // Use the visionBuffer
         // Truncate vision buffer
         // Append current vision measurement
@@ -293,7 +309,14 @@ public class DriveBase extends SubsystemBase {
         // Remove any vision poses the break the laws of physics
 
         // Basic vision update that just sets the pose, this is good enough for testing if it is working
-        this.limelightOffsetPose = pose.minus(this.robotPose);
+        this.limelightOffsetPose = pose.minus(getPose());
+
+        // If the x or y difference from the robots current pose to the limelight estimate pose update the current quest estimate for the position
+        if (this.limelightOffsetPose.getX() > 0.2 || this.limelightOffsetPose.getY() > 0.2) {
+            Pose3d limelightEstimatePose = new Pose3d(getPose().plus(this.limelightOffsetPose));
+            questNavSubsystem.resetQuestOdometry(limelightEstimatePose);
+            Util.consoleLog("Updated quest odomety to pose: ", limelightEstimatePose.toString());
+        }
     }
 
     public double getAngleToAim(Pose2d targetPose) {
@@ -414,8 +437,9 @@ public class DriveBase extends SubsystemBase {
         return new Pose2d(targetPose.getX() + xVelocityOffset, targetPose.getY() + yVelocityOffset, targetPose.getRotation());
     }
 
+    // Get the distance in meters between the current robot position and the target position
     public double getDistFromRobot(Pose2d targetPose) {
-        Pose2d currentPose = getODPose();
+        Pose2d currentPose = getODPose(); // TODO: Change this to the vision pose estimate
     
         double deltaX = targetPose.getX() - currentPose.getX();
         double deltaY = targetPose.getY() - currentPose.getY();

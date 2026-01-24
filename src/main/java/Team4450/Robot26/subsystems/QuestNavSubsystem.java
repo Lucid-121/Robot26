@@ -13,7 +13,7 @@ import Team4450.Robot26.utility.ConsoleEveryX;
 
 public class QuestNavSubsystem extends SubsystemBase {
     QuestNav questNav;
-    Transform3d ROBOT_TO_QUEST = new Transform3d(Constants.ROBOT_TO_QUEST_X, Constants.ROBOT_TO_QUEST_Y, Constants.ROBOT_TO_QUEST_Z, Rotation3d.kZero);
+    Transform3d ROBOT_TO_QUEST = new Transform3d(Constants.ROBOT_TO_QUEST.getX(), Constants.ROBOT_TO_QUEST.getY(), Constants.ROBOT_TO_QUEST.getZ(), Constants.ROBOT_TO_QUEST.getRotation());
     
     final Pose3d nullPose = new Pose3d(-1, -1, -1, Rotation3d.kZero);
     final Pose3d zeroPose = new Pose3d(0, 0, 0, Rotation3d.kZero);
@@ -24,8 +24,8 @@ public class QuestNavSubsystem extends SubsystemBase {
     PoseFrame[] poseFrames;
 
     /** Creates a new QuestNavSubsystem. */
-    private DriveBase drivebase;
-    public QuestNavSubsystem(DriveBase drivebase) {
+    private Drivebase drivebase;
+    public QuestNavSubsystem(Drivebase drivebase) {
         this.drivebase = drivebase;
         questNav = new QuestNav();
 

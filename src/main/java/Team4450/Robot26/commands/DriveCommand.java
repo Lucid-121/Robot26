@@ -10,14 +10,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import Team4450.Lib.LCD;
 import Team4450.Lib.Util;
 import Team4450.Robot26.Constants;
-import Team4450.Robot26.subsystems.DriveBase;
+import Team4450.Robot26.subsystems.Drivebase;
 import static Team4450.Robot26.Constants.*;
 import Team4450.Robot26.utility.ConsoleEveryX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveCommand extends Command 
 {
-    private final DriveBase         drivebase;
+    private final Drivebase         drivebase;
 
     private final DoubleSupplier    throttleSupplier;
     private final DoubleSupplier    strafeSupplier;
@@ -27,7 +27,7 @@ public class DriveCommand extends Command
 
     public final PIDController     headingPID;
 
-    public DriveCommand(DriveBase      driveBase,
+    public DriveCommand(Drivebase      driveBase,
                         DoubleSupplier throttleSupplier,
                         DoubleSupplier strafeSupplier,
                         DoubleSupplier rotationXSupplier,

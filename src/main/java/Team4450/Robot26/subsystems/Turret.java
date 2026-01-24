@@ -22,9 +22,9 @@ public class Turret extends SubsystemBase {
     // Flywheel runtime tunables (RPM and RPM/s units on dashboard)
     // (flywheel is currently controlled by TestSubsystem; no dashboard-driven flywheel tunables here)
 
-    private final DriveBase driveBase;
+    private final Drivebase driveBase;
 
-    public Turret(DriveBase driveBase) {
+    public Turret(Drivebase driveBase) {
         // initialize commanded angle to whatever a reasonable default is
         this.commandedAngleDeg = 0.0;
         this.requestedAngleDeg = 0.0;

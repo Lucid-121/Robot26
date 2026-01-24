@@ -9,7 +9,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import Team4450.Lib.Util;
 import Team4450.Lib.XboxController;
 import Team4450.Robot26.commands.DriveCommand;
-import Team4450.Robot26.subsystems.DriveBase;
+import Team4450.Robot26.subsystems.Drivebase;
 import Team4450.Robot26.subsystems.QuestNavSubsystem;
 import Team4450.Robot26.subsystems.ShuffleBoard;
 import Team4450.Robot26.subsystems.TestSubsystem;
@@ -40,7 +40,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
  */
 public class RobotContainer {
 	// Subsystems.
-	public static DriveBase drivebase;
+	public static Drivebase drivebase;
 	public static ShuffleBoard shuffleBoard;
 
     // Vision based subsystems all send data to the drivebase for use
@@ -143,7 +143,7 @@ public class RobotContainer {
         // The pigeon is setup somewhere in the drivebase function.
         // It is important to note that the pigeon documentation says that the device does not need to be still on boot,
         // however the documentation also says that the drift is worse when started while moving.
-		drivebase = new DriveBase();
+		drivebase = new Drivebase();
         visionSubsystem = new VisionSubsystem(drivebase);
         questNavSubsystem = new QuestNavSubsystem(drivebase);
 

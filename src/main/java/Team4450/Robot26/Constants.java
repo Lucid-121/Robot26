@@ -121,8 +121,6 @@ public final class Constants {
     public static double ROBOT_HEADING_TOLERANCE_DEG = 2;
     // public static double ROBOT_HEADING_MAX_OUTPUT = 1;
 
-    public static double FLYWHEEL_MAX_THEORETICAL_RPM = 4000;
-
     // Interpolation table
     public static double[] FLYWHEEL_SPEED_TABLE = {0.57, 0.595, 0.69, 0.715, 0.73, 0.82, 0.86};
     public static double[] FLYWHEEL_SPEED_DISTANCE_TABLE = {40, 56, 90, 95, 103, 127, 152};
@@ -144,11 +142,13 @@ public final class Constants {
     // When within this many degrees, snap to setpoint and zero velocity.
     public static final double TURRET_ANGLE_TOLERANCE_DEG = 0.5;
     // -------------------------------------------------------------------------------------
+    
+    /*
 
     // Flywheel tuning defaults
     // Default target RPM for flywheel (used as a manual override/starting value)
     // Keep this positive; use `FLYWHEEL_DIRECTION` to invert sign for hardware wiring differences.
-    public static final double FLYWHEEL_DEFAULT_TARGET_RPM = 1500.0;
+    public static final double FLYWHEEL_DEFAULT_TARGET_RPM = 2500.0;
     // Default flywheel acceleration in RPM per second (used for ramping if implemented)
     public static final double FLYWHEEL_DEFAULT_ACCEL_RPMS = 5000.0;
     // Default open-loop start percent for flywheel when controlled by code only (0.0 - 1.0)
@@ -224,6 +224,46 @@ public final class Constants {
         // theoretical limits (for telemetry/approximation)
         public static final double MAX_THEORETICAL_RPM = 4000.0;
     }
+    */
+
+    // -------------------------------------------------------------------------------------
+    // Flywheel tuning defaults (used as Shuffleboard starting values)
+    
+    // Default target RPM
+    public static final double FLYWHEEL_TARGET_RPM = 2650.0;
+
+    // CAN ID for flywheel TalonFX
+    public static final int FLYWHEEL_MOTOR_CAN_ID = 10;
+
+    // Closed-loop slot selection
+    public static final int FLYWHEEL_PID_SLOT = 0;
+    // Motor inversion handled in Talon configuration (not math)
+    public static final boolean FLYWHEEL_INVERTED = true;
+
+    // ---------------- Feedforward (Talon internal) ----------------
+    // Units: Volts, Volts/(rps), Volts/(rps/s)
+    public static final double FLYWHEEL_kS = 0.1;
+    public static final double FLYWHEEL_kV = 0.11;
+    public static final double FLYWHEEL_kA = 0.05;
+    // ---------------- PID (Velocity) ----------------
+    public static final double FLYWHEEL_kP = 0.45;
+    public static final double FLYWHEEL_kI = 0.25;
+    public static final double FLYWHEEL_kD = 0.0;
+
+    // ---------------- Motion Magic Velocity ----------------
+    // These only affect ramp rate
+    public static final boolean FLYWHEEL_USE_MOTION_MAGIC = true;
+
+    public static final double FLYWHEEL_MOTION_ACCEL_RPMS = 5000.0; // RPM/s
+    public static final double FLYWHEEL_MOTION_JERK = 0.0;
+
+    // ---------------- Telemetry / limits ----------------
+    public static final double FLYWHEEL_MAX_THEORETICAL_RPM = 4000.0;
+
+    // Flip this to 1 or -1 if direction is wrong
+    public static final int FLYWHEEL_DIRECTION = -1;
+
+    
 
     // What is the LCD
 	// LCD display line number constants showing class where the line is set.

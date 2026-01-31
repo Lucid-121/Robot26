@@ -11,6 +11,7 @@ import Team4450.Robot26.subsystems.Candle;
 import Team4450.Robot26.subsystems.DriveBase;
 import Team4450.Robot26.subsystems.ShuffleBoard;
 import Team4450.Lib.MonitorPDP;
+import Team4450.Lib.MonitorPower;
 import Team4450.Lib.Util;
 import Team4450.Lib.CameraFeed;
 import Team4450.Lib.XboxController;
@@ -74,14 +75,15 @@ public class RobotContainer
 	public static XboxController	utilityController = new XboxController(UTILITY_PAD);
 
 	// private PowerDistribution	pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kCTRE);
-	private PowerDistribution		pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
+	//private PowerDistribution		pdp = new PowerDistribution(REV_PDB, PowerDistribution.ModuleType.kRev);
 
 	// Compressor class controls the CTRE/REV Pneumatics control Module.
 	// Note: When you add the compressor back in, look at resetFaults method.
 	//private Compressor				pcm = new Compressor(PneumaticsModuleType.REVPH);
 
-	private MonitorPDP     			monitorPDPThread;
-	private MonitorCompressorPH		monitorCompressorThread;
+	//private MonitorPDP     			monitorPDPThread;
+	private MonitorPower   			monitorPowerThread;
+	//private MonitorCompressorPH		monitorCompressorThread;
     private CameraFeed				cameraFeed;
     
 	// Trajectories we load manually.
@@ -98,7 +100,7 @@ public class RobotContainer
 	{
 		Util.consoleLog();
 		
-	    SendableRegistry.addLW(pdp, "PDH"); // Only sent to NT in Test mode.
+	    //SendableRegistry.addLW(pdp, "PDH"); // Only sent to NT in Test mode.
 
 		// Get information about the match environment from the Field Control System.
       
@@ -207,10 +209,13 @@ public class RobotContainer
 		// monitorCompressorThread.SetLowPressureAlarm(50);
 		// monitorCompressorThread.start();
 		
-		monitorPDPThread = MonitorPDP.getInstance(pdp);
-		monitorPDPThread.start();
+		//monitorPDPThread = MonitorPDP.getInstance(pdp);
+		//monitorPDPThread.start();
 		
-		pdp.setSwitchableChannel(true);
+		monitorPowerThread = MonitorPower.getInstance();
+		monitorPowerThread.start();
+		
+		//pdp.setSwitchableChannel(true);
 		
 		// Start camera server thread using our class for usb cameras.
     
@@ -397,10 +402,12 @@ public class RobotContainer
 		// else
 		// 	pcm.disable();
 		
-		pdp.clearStickyFaults();
+		//pdp.clearStickyFaults();
 		//pcm.clearAllStickyFaults(); // Add back if we use a CTRE pcm.
 		
-		if (monitorPDPThread != null) monitorPDPThread.reset();
+		//if (monitorPDPThread != null) monitorPDPThread.reset();
+		
+		if (monitorPowerThread != null) monitorPowerThread.reset();
     }
 
 	// public void fixPathPlannerGyro() { rich

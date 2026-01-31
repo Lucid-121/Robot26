@@ -10,7 +10,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import Team4450.Lib.Util;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -70,8 +69,6 @@ public class TalonFXPositionController extends SubsystemBase {
     private double  slot1_kD = 0;   // No output for error derivative
 
     private double  kCV = 80;      // Motion Magic target cruise velocity of 80 rps
-    
-    PIDController pid = new PIDController(1, 0, 0);
 
     public TalonFXPositionController(TalonFX talon, String name) {
         this.talon = talon;

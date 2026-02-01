@@ -18,9 +18,9 @@ public class QuestNavSubsystem extends SubsystemBase {
     final Pose3d nullPose = new Pose3d(-1, -1, -1, Rotation3d.kZero);
     final Pose3d zeroPose = new Pose3d(0, 0, 0, Rotation3d.kZero);
 
-    ConsoleEveryX questTestLogger = new ConsoleEveryX(100);
-    ConsoleEveryX questLogger = new ConsoleEveryX(100);
-    ConsoleEveryX limelightWarn = new ConsoleEveryX(1000);
+    ConsoleEveryX questTestLogger = new ConsoleEveryX("Quest Test Logger", 100);
+    ConsoleEveryX questLogger = new ConsoleEveryX("Quest Logger", 100);
+    ConsoleEveryX limelightWarnLogger = new ConsoleEveryX("Limelight Warn Logger", 1000);
 
     PoseFrame[] poseFrames;
 
@@ -95,7 +95,7 @@ public class QuestNavSubsystem extends SubsystemBase {
                 resetTimer++;
             }
         } else {
-            limelightWarn.update("The Questnav is not found, force updating pose with limelight pose!");
+            limelightWarnLogger.update("The Questnav is not found, force updating pose with limelight pose!");
             drivebase.forceAddLimelightMeasurement(drivebase.limelightPoseEstimate);
             SmartDashboard.putBoolean("Quest Connected", false);
         }

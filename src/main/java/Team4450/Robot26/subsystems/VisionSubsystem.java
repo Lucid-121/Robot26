@@ -33,7 +33,6 @@ public class VisionSubsystem extends SubsystemBase {
     //
     Drivebase drivebase;
     boolean enabled = true;
-    int i = 0;
 
     public VisionSubsystem(Drivebase drivebase) {
 
@@ -75,7 +74,6 @@ public class VisionSubsystem extends SubsystemBase {
             return;
         }
         // How to stpo this when disabled
-        i++;
         boolean useLeftLimelight = true;
         boolean useRightLimelight = true;
         // Get latest pose estimage from each camera
@@ -98,30 +96,6 @@ public class VisionSubsystem extends SubsystemBase {
         // IDK what units the getY() return
         
         if (left_mt2 != null) {
-            if (i % 200 == 0) {
-                // Util.consoleLog("Left" + String.valueOf(left_mt2.getX()));
-                Util.consoleLog("Left Tags: " + String.valueOf(left_mt2.rawFiducials.length));
-                if (Math.abs(left_mt2.pose.getX()) > Constants.FIELD_MAX_X) {
-                    useLeftLimelight = false;
-                    Util.consoleLog("Left Outside max x");
-                }
-
-                if (Math.abs(left_mt2.pose.getY()) > Constants.FIELD_MAX_Y) {
-                    useLeftLimelight = false;
-                    Util.consoleLog("Left Outside max y");
-                }
-
-                if (left_mt2.rawFiducials.length < 1) {
-                    useLeftLimelight = false;
-                    Util.consoleLog("Left not no good raw fids");
-                }
-
-                if (useLeftLimelight) {
-                    Util.consoleLog("Add left vision");
-                    Util.consoleLog(left_mt2.pose.toString());
-                    drivebase.addLimelightMeasurement(left_mt2.pose, left_mt2.timestampSeconds);
-                }
-            }
             if (Math.abs(left_mt2.pose.getX()) > Constants.FIELD_MAX_X) {
                 useLeftLimelight = false;
             }
@@ -140,10 +114,6 @@ public class VisionSubsystem extends SubsystemBase {
         }
 
         if (right_mt2 != null) {
-            if (i % 200 == 0) {
-                // Util.consoleLog("Right" + String.valueOf(right_mt2.getX()));
-                Util.consoleLog("Right Tags: " + String.valueOf(right_mt2.rawFiducials.length));
-            }
             if (Math.abs(right_mt2.pose.getX()) > Constants.FIELD_MAX_X) {
                 useRightLimelight = false;
             }
@@ -160,7 +130,6 @@ public class VisionSubsystem extends SubsystemBase {
                 drivebase.addLimelightMeasurement(right_mt2.pose, right_mt2.timestampSeconds);
             }
         }
-
 
         // Get rid of the result if the yaw of the resulting pose is impossible
         //

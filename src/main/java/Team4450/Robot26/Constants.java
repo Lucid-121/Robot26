@@ -56,6 +56,9 @@ public final class Constants
     public static int KRAKEN_X60_MAX_THEORETICAL_RPM = 6000;
     public static int KRAKEN_X44_MAX_THEORETICAL_RPM = 7530;
 
+    // Shooter Constants
+    
+    // Intake Constants
     public static int INTAKE_MOTOR_PIVIT_CAN_ID = -1;
     public static int INTAKE_MOTOR_LEFT_CAN_ID = -1;
     public static int INTAKE_MOTOR_RIGHT_CAN_ID = -1;

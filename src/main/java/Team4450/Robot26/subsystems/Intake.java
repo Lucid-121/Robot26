@@ -32,8 +32,9 @@ public class Intake extends SubsystemBase {
 
     // I wish Java had errors as values
     public Intake() {
-        this.canPivit = intakePivitMotor.isConnected();
-        this.canSpin = intakeLeftMotor.isConnected() || intakeRightMotor.isConnected();
+        this.canPivit = this.intakePivitMotor.isConnected();
+        this.canSpin = this.intakeLeftMotor.isConnected() || this.intakeRightMotor.isConnected();
+
         // Assume the pivit starting position is 0
         this.pivitCurrentPosition = 0;
         this.pivitTargetPosition = 0;
@@ -42,8 +43,9 @@ public class Intake extends SubsystemBase {
             this.intakePivitMotor.setPosition(0);
         }
 
-        SmartDashboard.putBoolean("Intake can Pivit", canPivit);
-        SmartDashboard.putBoolean("Intake can Spin", canSpin);
+        // Convert to sendable
+        SmartDashboard.putBoolean("Intake can Pivit", this.canPivit);
+        SmartDashboard.putBoolean("Intake can Spin", this.canSpin);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class Intake extends SubsystemBase {
                 this.intakePivitMotor.set(0);
             }
 
-            this.pivitCurrentPositionMotorPosition = this.getPivitPosition();
+            this.pivitCurrentPositionMotorPosition = this.getPivitMotorPosition();
             this.pivitCurrentPosition = this.motorPositionToPivitPosition(this.pivitCurrentPositionMotorPosition);
             SmartDashboard.putNumber("Pivit current position", this.pivitCurrentPosition);
         }
@@ -130,30 +132,6 @@ public class Intake extends SubsystemBase {
         }
     }
 
-    public double getIntakeVoltage() {
-        if (canSpin) {
-            return intakeLeftMotor.getSupplyVoltage(true).getValueAsDouble() + intakeRightMotor.getSupplyVoltage(true).getValueAsDouble();
-        } else {
-            return -1;
-        }
-    }
-
-    public double getIntakeLeftMotorVoltage() {
-        if (canSpin) {
-            return intakeLeftMotor.getSupplyVoltage(true).getValueAsDouble();
-        } else {
-            return -1;
-        }
-    }
-
-    public double getIntakeRightMotorVoltage() {
-        if (canSpin) {
-            return intakeRightMotor.getSupplyVoltage(true).getValueAsDouble();
-        } else {
-            return -1;
-        }
-    }
-
     public void setPivitMotorSpeed(double speed) {
         if (canPivit) {
             intakePivitMotor.set(speed);
@@ -165,9 +143,7 @@ public class Intake extends SubsystemBase {
         pivitTargetPosition = position;
     }
 
-    // TODO:
-    public double getPivitPosition() {
-        // Need to convert
+    public double getPivitMotorPosition() {
         if (canPivit) {
             return intakePivitMotor.getPosition(true).getValueAsDouble();
         } else {
@@ -178,14 +154,6 @@ public class Intake extends SubsystemBase {
     public double getPivitMotorCurrent() {
         if (canPivit) {
             return intakePivitMotor.getSupplyCurrent(true).getValueAsDouble();
-        } else {
-            return -1;
-        }
-    }
-
-    public double getPivitMotorVoltage() {
-        if (canPivit) {
-            return intakePivitMotor.getSupplyVoltage(true).getValueAsDouble();
         } else {
             return -1;
         }

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.29,
-        "y": 5.11
+        "x": 1.5699999999999998,
+        "y": 3.9999999999999996
       },
       "isLocked": false,
       "linkedName": "CS"
@@ -20,18 +20,30 @@
         "y": 4.955
       },
       "prevControl": {
-        "x": 1.23,
-        "y": 4.93
+        "x": 2.5,
+        "y": 4.98
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "RD"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.1855345911949688,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Shoot(temporary)",
+      "waypointRelativePos": 0.19928186714542162,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 5.0,
@@ -45,7 +57,7 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "S-D",
+  "folder": "S-D Finished",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

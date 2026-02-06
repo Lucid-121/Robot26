@@ -51,14 +51,12 @@ public class DriveCommand extends Command
     }
 
     @Override
-    public void initialize()
-    {
+    public void initialize() {
         Util.consoleLog();
     }
 
     @Override
-    public void execute() 
-    {
+    public void execute() {
         // LCD.printLine(2, "rx=%.3f  ry=%.3f  throttle=%.3f  strafe=%.3f  rotX=%.3f rotY=%.3f",
         //     controller.getRightX(),
         //     controller.getRightY(),
@@ -143,9 +141,6 @@ public class DriveCommand extends Command
         double throttle = throttleSupplier.getAsDouble();
         double strafe = strafeSupplier.getAsDouble();
         
-        ConsoleEveryX rotationLog = new ConsoleEveryX(200);
-        rotationLog.update("Heading PID rotation output: " + String.valueOf(rotation));
-
         headingPID.setP(SmartDashboard.getNumber("Heading P", Constants.ROBOT_HEADING_KP));
         headingPID.setI(SmartDashboard.getNumber("Heading I", Constants.ROBOT_HEADING_KI));
         headingPID.setD(SmartDashboard.getNumber("Heading D", Constants.ROBOT_HEADING_KD));
@@ -168,9 +163,6 @@ public class DriveCommand extends Command
         // rotation = Util.squareInput(rotation);
         // rotation = Math.pow(rotation, 5);
         //
-        ConsoleEveryX rotationLog = new ConsoleEveryX(200);
-        rotationLog.update("Heading PID rotation output: " + String.valueOf(rotation));
-
         drivebase.drive(throttle, strafe, rotation);
     }
 

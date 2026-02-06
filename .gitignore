@@ -169,7 +169,7 @@ Shooter Characterization/characterization-project/
 # Misc temp files
 logging/logging.*.*
 logs/*
-#simgui*
+#simgui*.*
 *.wpilog
 
 # added just in case the above simgui* isn't catching them:

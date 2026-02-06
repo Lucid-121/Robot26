@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.569999999997834,
-        "y": 7.180000000003246
+        "x": 0.49,
+        "y": 6.92
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.196715989398447,
-        "y": 7.259674647832105
+        "x": 1.8558765209913775,
+        "y": 7.052468593870583
       },
       "isLocked": false,
-      "linkedName": "LS"
+      "linkedName": "LD#"
     },
     {
       "anchor": {
-        "x": 5.79,
-        "y": 7.0
+        "x": 4.48,
+        "y": 7.5
       },
       "prevControl": {
-        "x": 5.2992026543599,
-        "y": 7.718413505936958
+        "x": 3.403857273830531,
+        "y": 7.406636019190777
       },
       "nextControl": {
-        "x": 6.48,
-        "y": 5.99
+        "x": 6.67,
+        "y": 7.6899999999999995
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.63,
-        "y": 4.44
+        "x": 6.32,
+        "y": 5.24
       },
       "prevControl": {
-        "x": 5.843064921732682,
-        "y": 5.257433670387155
+        "x": 6.391834775527923,
+        "y": 6.928117224906153
       },
       "nextControl": {
-        "x": 7.112434816005638,
-        "y": 3.938867856750848
+        "x": 6.3,
+        "y": 4.7700000000000005
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +52,8 @@
         "y": 4.06
       },
       "prevControl": {
-        "x": 6.800043837212068,
-        "y": 3.998784804682973
+        "x": 6.25174519768368,
+        "y": 3.9181664854636447
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,11 +62,11 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -100.0
+      "waypointRelativePos": 0.9858490566037735,
+      "rotationDegrees": -90.0
     },
     {
-      "waypointRelativePos": 2,
+      "waypointRelativePos": 1.650943396226416,
       "rotationDegrees": 180.0
     }
   ],
@@ -86,10 +86,10 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "S-C Finished",
+  "folder": "D-C",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -70.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

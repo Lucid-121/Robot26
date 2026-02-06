@@ -276,9 +276,13 @@ public class Drivebase extends SubsystemBase {
         robotPose = pose;
     }
 
+    // This is for when the Questnav is not found.
+    public void forceAddLimelightMeasurement(Pose2d pose) {
+        robotPose = pose;
+    }
 
-    // AddVisionUpdate
-    public void addVisionMeasurement(Pose2d pose, double timestampSeconds) {
+    //
+    public void addLimelightMeasurement(Pose2d pose, double timestampSeconds) {
         // TODO: All the stuff below this
         // Use the visionBuffer
         // Truncate vision buffer
@@ -288,6 +292,7 @@ public class Drivebase extends SubsystemBase {
 
         // Basic vision update that just sets the pose, this is good enough for testing if it is working
         this.limelightPoseEstimate = pose;
+        SmartDashboard.putString("Limelight Pose", this.limelightPoseEstimate.toString());
     }
 
     public double getAngleToAim(Pose2d targetPose) {

@@ -41,7 +41,7 @@
       },
       "nextControl": {
         "x": 8.27,
-        "y": 0.09999999999999987
+        "y": 0.09999999999999976
       },
       "isLocked": false,
       "linkedName": null
@@ -97,7 +97,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "S-C",
+  "folder": "S-C Finished",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

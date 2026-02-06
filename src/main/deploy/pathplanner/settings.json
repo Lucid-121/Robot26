@@ -4,8 +4,8 @@
   "holonomicMode": true,
   "pathFolders": [
     "D-C",
-    "S-C",
-    "S-D"
+    "S-C Finished",
+    "S-D Finished"
   ],
   "autoFolders": [],
   "defaultMaxVel": 5.0,

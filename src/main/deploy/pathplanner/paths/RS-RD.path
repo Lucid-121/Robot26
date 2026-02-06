@@ -20,8 +20,8 @@
         "y": 4.955
       },
       "prevControl": {
-        "x": 2.0600000000000005,
-        "y": 4.84
+        "x": 1.96,
+        "y": 5.01
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,7 +50,7 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "S-D",
+  "folder": "S-D Finished",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 70.0

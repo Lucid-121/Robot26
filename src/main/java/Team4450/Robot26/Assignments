@@ -3,7 +3,8 @@ Port and Button Assignments.
 CTRE CAN Ports
 Port	Device			Description
 -----------------------------------------------------------------------------------
-21      CANdle          The CTRE CANdle LED controller
+1       Pigeon          CTRE Pigeon IMU.
+21      CANdle          The CTRE CANdle LED controller.
 
 Motor CAN Ports
 Port	Device			Description
@@ -127,4 +128,3 @@ Alternate Drive         boolean         True when alternate driving mode is enab
 CompressorEnabled       boolean         True when/to enable compresspr.
 LowPressure             boolean         Toggles true/false when pressure is low.
 AirPressure             numeric         Actual high side air pressure.
-

@@ -10,6 +10,7 @@ import Team4450.Robot26.commands.DriveCommand;
 import Team4450.Robot26.subsystems.Candle;
 import Team4450.Robot26.subsystems.Intake;
 import Team4450.Robot26.subsystems.Drivebase;
+import Team4450.Robot26.subsystems.Shooter;
 import Team4450.Robot26.subsystems.ShuffleBoard;
 import Team4450.Lib.MonitorPDP;
 import Team4450.Lib.MonitorPower;
@@ -54,6 +55,7 @@ public class RobotContainer {
 	public final DriveCommand driveCommand;
 
     public Intake intake;
+	public Shooter shooter;
     public TestSubsystem testSubsystem;
 
     // General todo list for Cole Pearson
@@ -112,6 +114,7 @@ public class RobotContainer {
 		Util.consoleLog();
 
         this.intake = new Intake();
+		this.shooter = new Shooter(drivebase);
         this.testSubsystem = new TestSubsystem();
 		
 		// Get information about the match environment from the Field Control System.
